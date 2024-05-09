@@ -1,20 +1,24 @@
 const dotenv = require("dotenv");
-const mongoose = require("mongoose");
+// const mongoose = require("mongoose");
+
+const connect= require("./db")
 
 dotenv.config({ path: "./config.env" });
 
 const app = require("./app");
 
-mongoose.set("strictQuery", false);
+// mongoose.set("strictQuery", false);
 
-mongoose
-  .connect(process.env.DATABASE, {
-    // useNewUrlParser: true,
-    // useUnifiedTopology: true,
-  })
-  .then(() => {
-    console.log("DB Connection Successfull...");
-  });
+// mongoose
+//   .connect(process.env.DATABASE_TEST, {
+//     // useNewUrlParser: true,
+//     // useUnifiedTopology: true,
+//   })
+//   .then(() => {
+//     console.log("DB Connection Successfull...");
+//   });
+
+connect()
 
 const port = process.env.PORT || 3000;
 
