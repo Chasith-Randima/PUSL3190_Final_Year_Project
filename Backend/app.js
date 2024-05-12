@@ -38,81 +38,37 @@ app.use("/api/v1/websites", websiteRouter);
 app.use("/api/v1/scrapes", scrapeRouter);
 app.use("/api/v1/newscrapes", newScrapeRouter);
 
+
+// function to send request to scrape api
 var cron = require('node-cron');
 
 const scrapeArticles = ()=>{
 
+  //accessing scrape api url from environment variables
   const API = process.env.NEXT_PUBLIC_SCRAPE_API_DEVELOPMENT;
   const url = `${API}/scrapes`;
 
+  // setting required parameters
   const paramsData = {
     all:"all"
-    // page: 1,
-    // limit: 10,
-    // category: 'some_category',
-    // brandName: 'some_brand',
-    // price: 100,
-    // quantity: 50,
-    // sort: 'ascending'
-    // Add more parameters as needed
   };
 
   const queryString = new URLSearchParams(paramsData).toString();
   const fullUrl = `${url}?${queryString}`;
 
+  // sending request via in build fetch package
   try {
    fetch(fullUrl);
-    
-   
+  //  catching errors and console logging them
   } catch (error) {
     console.error('Fetch error:', error);
     
   }
-
-
-  // let API = process.env.NEXT_PUBLIC_SCRAPE_API_DEVELOPMENT
-  // let url = `${API}/scrapes`;
-
-  // console.log(url)
-
-  // axios(url, {
-  //   method: "GET",
-  //   // params: { ...query },
-  //   params: {
-  //     page: paramsData.page,
-  //     limit: paramsData.limit,
-  //     category: paramsData.category,
-  //     brandName: paramsData.brand,
-  //     "price[lte]": paramsData.price,
-  //     "quantity[lte]": paramsData.quantity,
-  //      all:"all",
-  //     // createdAt: paramsData.createdAt,
-
-  //     //   name: paramsData.name,
-  //     //   city: paramsData.city,
-  //     //   brandname: paramsData.brandname,
-  //     //   Article: paramsData.Article,
-  //     //   "price[gte]": paramsData.priceMin,
-
-  //     sort: paramsData.sort,
-  //   },
-  // })
-  //   .then((response) => {
-  //     console.log(response.data);
-  //     return response.data;
-  //   })
-  //   .catch((err) => {
-  //     console.log(err);
-  //     return err;
-  //   });
-
-
 }
 
-cron.schedule('* * * * *', () => {
-  console.log("iam called")
+// running crone job and calling the function inside it every hour
+cron.schedule('1 * * * *', () => {
  scrapeArticles()
- 
 });
 
 app.use((req, res, next) => {
