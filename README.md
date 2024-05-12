@@ -2,7 +2,7 @@
 
 ## 1. Installation and Setup Instructions
 
-- Download the Zip folder and Unzip it. Then navigate inside to `PUSL3190_Computing_Individual_Project_10820921` directory.
+- Download or clone the project. Then navigate inside to inside the project directory.
 - Make sure you have an internet connection.
 
 Inside that folder, there are 4 other folders:
